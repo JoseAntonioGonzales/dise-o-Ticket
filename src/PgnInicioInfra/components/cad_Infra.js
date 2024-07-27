@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faTimes, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import NewTicketModal from '../NuevoTicketModal'; // Asegúrate de ajustar la ruta de importación
+import { faChevronLeft, faChevronRight, faTimes} from '@fortawesome/free-solid-svg-icons';
 
-const Card = ({ item }) => {
+const Card = ({ item, onEdit, onDelete }) => {
   const [isImageZoomed, setIsImageZoomed] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   const handleImageClick = (index) => {
     setCurrentImageIndex(index);
@@ -28,16 +25,6 @@ const Card = ({ item }) => {
   const handleNext = (e) => {
     e.stopPropagation();
     setCurrentImageIndex((prevIndex) => (prevIndex === item.images.length - 1 ? 0 : prevIndex + 1));
-  };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setIsEditing(false);
   };
 
   return (
@@ -61,23 +48,12 @@ const Card = ({ item }) => {
           ))}
         </Carousel>
         <div className="p-6">
-          <h3 className="text-lg font-bold mb-2">Descripción</h3>
-          <p className="text-gray-700 text-base whitespace-pre-line">
+          <h3 className="text-lg font-bold text-gray-800 mb-2">Descripción</h3>
+          <p className="text-gray-700 text-base whitespace-pre-line mb-4">
             {item.description}
           </p>
-          <div className="flex justify-between mt-4">
-            <button
-              onClick={handleEditClick}
-              className="text-blue-500 hover:text-blue-700"
-            >
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-            <button
-              onClick={() => alert('Eliminar funcionalidad no implementada')}
-              className="text-red-500 hover:text-red-700"
-            >
-              <FontAwesomeIcon icon={faTrash} />
-            </button>
+          <div className="flex justify-between mt-2">
+            
           </div>
         </div>
       </div>
@@ -101,10 +77,6 @@ const Card = ({ item }) => {
             </button>
           </div>
         </div>
-      )}
-
-      {isModalOpen && (
-        <NewTicketModal onClose={handleCloseModal} isEditing={isEditing} />
       )}
     </>
   );

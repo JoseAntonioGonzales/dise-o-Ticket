@@ -3,7 +3,7 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import './CarouselModal.css';
 
-const NewTicketModal = ({ onClose }) => {
+const NewTicketModal = ({ onClose, isEditing }) => {
   const [selectedImages, setSelectedImages] = useState([
     '/b.jpg',
     '/a.jpg',
@@ -46,12 +46,7 @@ const NewTicketModal = ({ onClose }) => {
         <form className="space-y-2 text-sm lg:w-1/2 mt-7">
           <div>
             <label className="font-bold block text-gray-700 font-semibold mb-1">SELEC. EL ÁREA:</label>
-            <select className="w-full px-2 py-1 border rounded-lg">
-              <option value="">Seleccionar área</option>
-              <option value="soporte">Soporte</option>
-              <option value="infraestructura">Infraestructura</option>
-              <option value="desarrollo">Desarrollo</option>
-            </select>
+            <input className="w-full px-2 py-1 border rounded-lg" type="option" placeholder="Área" />
           </div>
           <div>
             <label className="block text-gray-700 font-semibold mb-1">DESCRIPCIÓN:</label>
@@ -59,13 +54,7 @@ const NewTicketModal = ({ onClose }) => {
           </div>
           <div>
             <label className="block text-gray-700 font-semibold mb-1">PRIORIDAD:</label>
-            <select className="w-full px-2 py-1 border rounded-lg">
-              <option value="">Seleccionar prioridad</option>
-              <option value="alta">Urgente</option>
-              <option value="alta">Alta</option>
-              <option value="media">Media</option>
-              <option value="baja">Baja</option>
-            </select>
+            <input className="w-full px-2 py-1 border rounded-lg" type="text" placeholder="Prioridad" />
           </div>
           <div>
             <label className="block text-gray-700 font-semibold mb-1">FECHA DE SOLICITUD:</label>
@@ -73,14 +62,12 @@ const NewTicketModal = ({ onClose }) => {
           </div>
           <div>
             <label className="block text-gray-700 font-semibold mb-1">ESTADO:</label>
-            <select className="w-full px-2 py-1 border rounded-lg">
-              <option value="">Seleccionar estado</option>
-              <option value="abierto">Completado</option>
-              <option value="en_progreso">Pendiente</option>
-            </select>
+            <input className="w-full px-2 py-1 border rounded-lg" type="text" placeholder="Estado" />
           </div>
           <div className="text-center">
-            <button type="submit" className="bg-blue-500 text-white px-3 py-1 rounded-lg">Crear Ticket</button>
+            <button type="submit" className="bg-blue-500 text-white px-3 py-1 rounded-lg">
+              {isEditing ? 'Actualizar Ticket' : 'Crear Ticket'}
+            </button>
           </div>
         </form>
       </div>
