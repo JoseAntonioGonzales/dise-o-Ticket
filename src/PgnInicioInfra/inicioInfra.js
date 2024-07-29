@@ -1,45 +1,77 @@
-// inicioInfra.js
-import React from 'react';
+import React, { useState } from 'react';
+import Layout from './components/Layout'; // Asegúrate de ajustar la ruta según tu estructura
+import Card from './components/cad_Infra';
+import InfraInfoModal from './InfraInfoModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import Card from './components/cad_Infra';
-import Navbar from './components/navbar';
 
 const Inicio = () => {
-  const items = [
+  const [items] = useState([
+    // Ejemplo de datos; reemplazar con datos reales.
     {
-      description: 'Se reventaron los focos de la sucursal de forma inesperada, solicito un cambio',
+      id: 1,
       images: [
-        '/333.png',
-        '/222.png',
-        '/logo192.png',
-        '/logo192.png',
-      ]
+        'a.jpg',
+        'b.jpg',
+        '222.png',
+      ],
+      area: 'Mantenimiento',
+      description: 'Fuga de agua en la planta baja.',
+      priority: 'Alta',
+      date: '2024-07-29',
+      status: 'Pendiente'
     },
     {
-      description: 'Se reventaron los focos de la sucursal de forma inesperada, solicito un cambio',
+      id: 2,
       images: [
-        '/images/image1.jpg',
-        '/images/image2.jpg',
-        '/images/image3.jpg',
-      ]
+        'a.jpg',
+        'b.jpg',
+      ],
+      area: 'Mantenimiento',
+      description: 'Fuga de agua en la planta baja.',
+      priority: 'Alta',
+      date: '2024-07-29',
+      status: 'Pendiente'
     },
     {
-      description: 'Se reventaron los focos de la sucursal de forma inesperada, solicito un cambio',
+      id: 3,
       images: [
-        '/images/image1.jpg',
-        '/images/image2.jpg',
-        '/images/image3.jpg',
-      ]
+        'a.jpg',
+        '222.png',
+      ],
+      area: 'Mantenimiento',
+      description: 'Fuga de agua en la planta baja.',
+      priority: 'Alta',
+      date: '2024-07-29',
+      status: 'Pendiente'
     },
-    // Agrega más elementos según sea necesario
-  ];
+    {
+      id: 4,
+      images: [
+        
+        '222.png',
+      ],
+      area: 'Mantenimiento',
+      description: 'Fuga de agua en la planta baja.',
+      priority: 'Alta',
+      date: '2024-07-29',
+      status: 'Pendiente'
+    },
+    // Más datos...
+  ]);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+
+  const handleCardClick = (item) => {
+    setSelectedTicket(item);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedTicket(null);
+  };
 
   return (
-    <div className="bg-gray-100 min-h-screen pt-16"> {/* Añadimos padding-top para compensar el navbar fijo */}
-      <Navbar />
-      
-      <div className="sticky top-16 bg-white shadow-md z-10"> {/* Hacemos este contenedor sticky */}
+    <Layout>
+      <div className="sticky top-0 bg-white shadow-md z-10">
         <div className="container mx-auto p-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold italic">LISTA TIKET PEDIDOS</h1>
           <div className="relative">
@@ -52,15 +84,21 @@ const Inicio = () => {
           </div>
         </div>
       </div>
-
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item, index) => (
-            <Card key={index} item={item} />
+            <Card key={index} item={item} onClick={() => handleCardClick(item)} />
           ))}
         </div>
       </div>
-    </div>
+      {selectedTicket && (
+        <InfraInfoModal
+          isOpen={!!selectedTicket}
+          onRequestClose={handleCloseModal}
+          ticket={selectedTicket}
+        />
+      )}
+    </Layout>
   );
 };
 
